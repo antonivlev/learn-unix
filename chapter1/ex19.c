@@ -14,16 +14,14 @@ new tools:
 
 int readline(char buf[])
 {
-  int c, i, j;
+  int c, i;
   i = 0;
 
-  while (i < 100)
+  while ((c = getchar()) != EOF && c != '\n')
   {
-    c = getchar();
     buf[i] = c;
     ++i;
   }
-  ++i;
   buf[i] = '\0';
 
   return i;
@@ -32,21 +30,11 @@ int readline(char buf[])
 // when does getchar hold?
 int main()
 {
-  int c, c2, i;
+  int c, n;
   char line[BUF_SIZE];
 
-  while ((c = getchar()) != EOF)
+  while ((n = readline(line)) != 0)
   {
-    i = 0;
-    line[i] = c;
-    while ((c2 = getchar()) != '\n')
-    {
-      ++i;
-      line[i] = c2;
-    }
-    ++i;
-    line[i] = '\0';
-
     printf("%s\n", line);
   }
 
