@@ -10,7 +10,7 @@ new tools:
 */
 #include <stdio.h>
 
-#define BUF_SIZE 100
+#define BUF_SIZE 10
 
 int readline(char buf[])
 {
@@ -27,6 +27,31 @@ int readline(char buf[])
   return i;
 }
 
+void reverse(char buf[])
+{
+  char reversed[BUF_SIZE + 1];
+  int i, nullindex;
+
+  for (i = 0; i < BUF_SIZE; ++i)
+  {
+    if (buf[i] == '\0')
+    {
+      nullindex = i;
+      break;
+    }
+  }
+
+  for (i = 0; i < nullindex; ++i)
+  {
+    reversed[i] = buf[nullindex - 1 - i];
+  }
+
+  for (i = 0; i < nullindex; ++i)
+  {
+    buf[i] = reversed[i];
+  }
+}
+
 // when does getchar hold?
 int main()
 {
@@ -35,6 +60,7 @@ int main()
 
   while ((n = readline(line)) != 0)
   {
+    reverse(line);
     printf("%s\n", line);
   }
 
