@@ -16,9 +16,9 @@ here
 
 int main()
 {
-  int c, i;
+  int c, i, shouldbreak;
 
-  i = 0;
+  i = shouldbreak = 0;
 
   while ((c = getchar()) != EOF)
   {
