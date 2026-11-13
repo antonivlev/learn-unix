@@ -12,24 +12,24 @@ here
 */
 #include <stdio.h>
 
-#define N 10
+#define N 20
 
 int main()
 {
-  int c, i, shouldbreak;
+  int c, i;
 
-  i = shouldbreak = 0;
+  i = 0;
 
   while ((c = getchar()) != EOF)
   {
-    if (i % N == 0)
+    if (c == ' ' && i >= N)
     {
       putchar('\n');
-      putchar(c);
+      i = 0;
+      continue;
     }
-    else
-      putchar(c);
 
+    putchar(c);
     ++i;
   }
 }
