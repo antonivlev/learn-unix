@@ -1,3 +1,11 @@
+/* ******
+
+software simulation
+
+Living Figma with simulated data + ability to go to any state/screen
+PRs can map to changes on the Figma
+
+* ******/
 /*
 hello this is a very long line here
 
