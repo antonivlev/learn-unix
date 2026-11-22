@@ -35,13 +35,14 @@ int readline(char buf[])
   return i;
 }
 
-/*
-a 1
-r 2
-l 3
-else 0
-*/
-int get_opcode(char line[])
+typedef enum
+{
+  ADD,
+  REMOVE,
+  LIST
+} Operation;
+
+Operation get_opcode(char line[])
 {
   if (line[0] != ':')
   {
@@ -52,11 +53,11 @@ int get_opcode(char line[])
   switch ((c = line[1]))
   {
   case 'a':
-    return 1;
+    return ADD;
   case 'r':
-    return 2;
+    return REMOVE;
   case 'l':
-    return 3;
+    return LIST;
   }
 
   return 0;
@@ -146,13 +147,13 @@ int main()
   while ((n = readline(line)) > 0)
   {
     int op = get_opcode(line);
-    if (op == 1)
+    if (op == ADD)
     {
       fill_content(content, line);
       add_todo(content, todos);
     }
 
-    if (op == 3)
+    if (op == LIST)
     {
       print_todos(todos);
     }
