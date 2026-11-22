@@ -1,40 +1,160 @@
 /*
 
-:add Wash dishes
-:add Do something
+:a Wash dishes
+:a Do something
 
-:list
+:l
 ===>
 1. Wash dishes
 2. Do something
 
-:done 1
+:r 1
 
-:list
+:l
 ===>
 1. Do something
 
 */
 #include <stdio.h>
 
-#define N 20
+#define BUF_SIZE 100
+#define NUM_ROWS 60
+
+int readline(char buf[])
+{
+  int c, i;
+  i = 0;
+
+  while ((c = getchar()) != EOF && c != '\n')
+  {
+    buf[i] = c;
+    ++i;
+  }
+  buf[i] = '\0';
+
+  return i;
+}
+
+/*
+a 1
+r 2
+l 3
+else 0
+*/
+int get_opcode(char line[])
+{
+  if (line[0] != ':')
+  {
+    return 0;
+  }
+
+  char c;
+  switch ((c = line[1]))
+  {
+  case 'a':
+    return 1;
+  case 'r':
+    return 2;
+  case 'l':
+    return 3;
+  }
+
+  return 0;
+}
+
+void nullify(char buf[])
+{
+  int i;
+  for (i = 0; i < BUF_SIZE; ++i)
+  {
+    buf[i] = '\0';
+  }
+}
+
+void nullify_todos(char todos[NUM_ROWS][BUF_SIZE])
+{
+  int i;
+  for (i = 0; i < NUM_ROWS; ++i)
+  {
+    nullify(todos[i]);
+  }
+}
+
+void copy(char source[], char dest[])
+{
+  int i;
+  for (i = 0; i < BUF_SIZE; ++i)
+  {
+    dest[i] = source[i];
+  }
+}
+
+void fill_content(char buf[], char line[])
+{
+  nullify(buf);
+  // :a hello
+  int i = 3;
+  char c;
+
+  while ((c = line[i]) != '\0')
+  {
+    buf[i - 3] = line[i];
+    ++i;
+  }
+  ++i;
+  buf[i] = '\0';
+}
+
+void add_todo(char content[], char todos[NUM_ROWS][BUF_SIZE])
+{
+  int i;
+
+  for (i = 0; i < NUM_ROWS; i++)
+  {
+    if (todos[i][0] == '\0')
+    {
+      break;
+    }
+  }
+
+  copy(content, todos[i]);
+}
+
+void print_todos(char todos[NUM_ROWS][BUF_SIZE])
+{
+  int i;
+
+  for (i = 0; i < NUM_ROWS; i++)
+  {
+    if (todos[i][0] != '\0')
+    {
+      printf("%d. %s\n", i + 1, todos[i]);
+    }
+  }
+}
 
 int main()
 {
-  int c, i;
+  int n, opcode;
 
-  i = 0;
+  char line[BUF_SIZE], content[BUF_SIZE];
 
-  while ((c = getchar()) != EOF)
+  char todos[NUM_ROWS][BUF_SIZE];
+
+  nullify_todos(todos);
+
+  while ((n = readline(line)) > 0)
   {
-    if (c == ' ' && i >= N)
+    int op = get_opcode(line);
+    if (op == 1)
     {
-      putchar('\n');
-      i = 0;
-      continue;
+      fill_content(content, line);
+      add_todo(content, todos);
     }
 
-    putchar(c);
-    ++i;
+    if (op == 3)
+    {
+      print_todos(todos);
+    }
   }
 }
