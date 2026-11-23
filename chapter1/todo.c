@@ -81,7 +81,7 @@ void nullify_todos(char todos[NUM_ROWS][BUF_SIZE])
   }
 }
 
-void copy(char source[], char dest[])
+void copy(const source[], char dest[])
 {
   int i;
   for (i = 0; i < BUF_SIZE; ++i)
@@ -146,7 +146,7 @@ int main()
 
   while ((n = readline(line)) > 0)
   {
-    int op = get_opcode(line);
+    Operation op = get_opcode(line);
     if (op == ADD)
     {
       fill_content(content, line);
