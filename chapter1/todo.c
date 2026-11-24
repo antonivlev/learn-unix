@@ -72,7 +72,7 @@ void nullify(char buf[])
   }
 }
 
-void nullify_todos(char todos[NUM_ROWS][BUF_SIZE])
+void nullify_todos(char todos[][BUF_SIZE])
 {
   int i;
   for (i = 0; i < NUM_ROWS; ++i)
